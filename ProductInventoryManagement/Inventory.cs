@@ -33,7 +33,7 @@ namespace ProductInventory
 
         }
 
-        public void UpdateProduct(string name, int price, int quantity) //method to update the details of the current product
+        public void UpdateProduct(string name, string newName, double price, int quantity) //method to update the details of the current product
         {
             foreach (Product prod in products)
             {
@@ -45,10 +45,31 @@ namespace ProductInventory
                     switch (answer)
                     {
                         case "y":
+                            prod.Name = newName;
                             prod.Price = price;
                             prod.Quantity = quantity;
                             Console.WriteLine("Product updated successfully.");
                             return;
+                    }
+                }
+            }
+        }
+
+        public void RemoveProduct(string name) //method to remove a product from the inventory to remove 
+        {
+            for(int i = products.Count-1; i>=0; i--) //have to use for loop to avoid collection modified exception
+            {
+                
+                if (products[i].Name == name)
+                {
+                    Console.WriteLine($"is this the correct product you want to remove? Name:{products[i].Name}, Price: {products[i].Price}, Quantity: {products[i].Quantity} Y/N");
+                    string answer = Console.ReadLine().ToLower();
+
+                    switch (answer)
+                    {
+                        case "y":
+                            products.Remove(products[i]);
+                            break;
                     }
                 }
             }
